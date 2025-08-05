@@ -123,13 +123,13 @@ const HeroSection = () => {
         {/* Call to Action Buttons */}
         <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4 animate-fade-up delay-300">
           <Button className="bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-xl font-semibold text-lg shadow-md transition hover:scale-105 h-auto">
-            🚀 Join the Mission
+            Join the Mission
           </Button>
           <Button 
             variant="outline" 
             className="border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white py-3 px-6 rounded-xl font-semibold text-lg transition hover:scale-105 h-auto bg-transparent"
           >
-            👀 Explore More
+            Explore More
           </Button>
         </div>
       </div>
