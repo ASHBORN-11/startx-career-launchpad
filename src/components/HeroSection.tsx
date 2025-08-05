@@ -1,108 +1,139 @@
 import { Button } from "@/components/ui/button";
-import heroImage from "@/assets/hero-image.jpg";
+import { useEffect, useRef } from "react";
 
 const HeroSection = () => {
-  return (
-    <div className="relative min-h-screen bg-gradient-to-br from-background via-muted/30 to-background">
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_40%,rgba(47,128,237,0.05),transparent_50%)] pointer-events-none" />
+  const particlesRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    if (!particlesRef.current) return;
+
+    const canvas = particlesRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    // Set canvas size
+    const resizeCanvas = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    // Particles array
+    const particles: Array<{
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      size: number;
+    }> = [];
+
+    // Create particles
+    for (let i = 0; i < 40; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        size: Math.random() * 3 + 1
+      });
+    }
+
+    // Animation loop
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
       
-      <div className="container mx-auto px-4 pt-20 pb-16">
-        <div className="grid lg:grid-cols-2 gap-12 items-center min-h-[80vh]">
-          
-          {/* Left Column - Content */}
-          <div className="space-y-8 text-center lg:text-left">
-            {/* Badge */}
-            <div className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-startx-royal/10 to-startx-green/10 border border-startx-royal/20">
-              <span className="text-sm font-medium text-startx-royal">🚀 Now Live</span>
-            </div>
-            
-            {/* Main Headline */}
-            <h1 className="font-poppins font-bold text-5xl lg:text-6xl xl:text-7xl leading-tight">
-              <span className="text-foreground">Launch Your</span>
-              <br />
-              <span className="bg-gradient-to-r from-startx-royal to-startx-green bg-clip-text text-transparent">
-                Career
-              </span>
-              <br />
-              <span className="text-foreground">with STARTX</span>
-            </h1>
-            
-            {/* Subheadline */}
-            <p className="text-xl lg:text-2xl text-muted-foreground font-inter leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              The smarter, faster, and more connected way to discover jobs, build your network, and showcase your skills — all in one place.
-            </p>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-              <Button 
-                variant="hero" 
-                size="lg" 
-                className="h-14 px-8 text-lg font-poppins"
-              >
-                Get Started — It's Free
-              </Button>
-              <Button 
-                variant="hero-outline" 
-                size="lg" 
-                className="h-14 px-8 text-lg font-poppins"
-              >
-                Explore Jobs
-              </Button>
-            </div>
-            
-            {/* Stats */}
-            <div className="flex flex-wrap justify-center lg:justify-start gap-8 pt-8">
-              <div className="text-center">
-                <div className="font-poppins font-bold text-2xl text-startx-royal">35K+</div>
-                <div className="text-sm text-muted-foreground">Jobs Listed</div>
-              </div>
-              <div className="text-center">
-                <div className="font-poppins font-bold text-2xl text-startx-green">150K+</div>
-                <div className="text-sm text-muted-foreground">Users</div>
-              </div>
-              <div className="text-center">
-                <div className="font-poppins font-bold text-2xl text-startx-coral">95%</div>
-                <div className="text-sm text-muted-foreground">Satisfaction</div>
-              </div>
-            </div>
-          </div>
-          
-          {/* Right Column - Image */}
-          <div className="relative">
-            <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src={heroImage} 
-                alt="STARTX - Modern job discovery platform" 
-                className="w-full h-auto object-cover"
-              />
-              {/* Overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-startx-royal/10 to-transparent" />
-            </div>
-            
-            {/* Floating cards */}
-            <div className="absolute -top-6 -left-6 bg-white rounded-xl shadow-lg p-4 border border-border">
-              <div className="flex items-center gap-3">
-                <div className="w-3 h-3 bg-startx-green rounded-full animate-pulse" />
-                <span className="text-sm font-medium text-foreground">Active Job Search</span>
-              </div>
-            </div>
-            
-            <div className="absolute -bottom-6 -right-6 bg-white rounded-xl shadow-lg p-4 border border-border">
-              <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-r from-startx-royal to-startx-green rounded-full flex items-center justify-center">
-                  <span className="text-white text-xs font-bold">AI</span>
-                </div>
-                <div>
-                  <div className="text-sm font-medium text-foreground">Smart Matching</div>
-                  <div className="text-xs text-muted-foreground">95% Accuracy</div>
-                </div>
-              </div>
-            </div>
+      // Update and draw particles
+      particles.forEach((particle, i) => {
+        particle.x += particle.vx;
+        particle.y += particle.vy;
+
+        // Wrap around edges
+        if (particle.x < 0) particle.x = canvas.width;
+        if (particle.x > canvas.width) particle.x = 0;
+        if (particle.y < 0) particle.y = canvas.height;
+        if (particle.y > canvas.height) particle.y = 0;
+
+        // Draw particle
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+        ctx.beginPath();
+        ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Draw connections
+        particles.slice(i + 1).forEach(otherParticle => {
+          const dx = particle.x - otherParticle.x;
+          const dy = particle.y - otherParticle.y;
+          const distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 150) {
+            ctx.strokeStyle = `rgba(136, 136, 136, ${0.3 * (1 - distance / 150)})`;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(particle.x, particle.y);
+            ctx.lineTo(otherParticle.x, otherParticle.y);
+            ctx.stroke();
+          }
+        });
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+    };
+  }, []);
+
+  return (
+    <section className="relative min-h-screen flex flex-col justify-center items-center text-center bg-gradient-to-br from-gray-950 via-gray-900 to-black px-6 py-24 text-white overflow-hidden">
+      {/* Animated Background Element */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        <canvas ref={particlesRef} className="w-full h-full" />
+      </div>
+
+      {/* Main Content */}
+      <div className="relative z-10 max-w-3xl mx-auto">
+        {/* Logo or Icon */}
+        <div className="mb-6">
+          <div className="h-12 mx-auto animate-fade-in flex items-center justify-center">
+            <span className="font-poppins font-bold text-3xl bg-gradient-to-r from-indigo-400 to-purple-400 bg-clip-text text-transparent">
+              STARTX
+            </span>
           </div>
         </div>
+
+        {/* Title */}
+        <h1 className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight tracking-tight animate-fade-up font-poppins">
+          <span className="text-indigo-500">STARTX</span> Your Next Big Thing
+        </h1>
+
+        {/* Subheading */}
+        <p className="mt-6 text-lg sm:text-xl text-gray-300 animate-fade-up delay-200 font-inter">
+          We empower creators, makers, and visionaries to build, launch, and grow — faster than ever.
+        </p>
+
+        {/* Typewriter Prompt */}
+        <p className="mt-4 text-sm sm:text-base text-gray-400 font-mono animate-typewriter">
+          &gt;&gt; Are you ready to take off? ⏳
+        </p>
+
+        {/* Call to Action Buttons */}
+        <div className="mt-10 flex flex-col sm:flex-row justify-center gap-4 animate-fade-up delay-300">
+          <Button className="bg-indigo-600 hover:bg-indigo-700 text-white py-3 px-6 rounded-xl font-semibold text-lg shadow-md transition hover:scale-105 h-auto">
+            🚀 Join the Mission
+          </Button>
+          <Button 
+            variant="outline" 
+            className="border border-indigo-500 text-indigo-400 hover:bg-indigo-500 hover:text-white py-3 px-6 rounded-xl font-semibold text-lg transition hover:scale-105 h-auto bg-transparent"
+          >
+            👀 Explore More
+          </Button>
+        </div>
       </div>
-    </div>
+    </section>
   );
 };
 
