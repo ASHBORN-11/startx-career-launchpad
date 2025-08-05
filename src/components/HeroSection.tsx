@@ -25,7 +25,7 @@ const HeroSection = () => {
                 Career
               </span>
               <br />
-              <span className="text-foreground">with START</span>
+              <span className="text-foreground">with STARTX</span>
             </h1>
             
             {/* Subheadline */}
@@ -73,7 +73,7 @@ const HeroSection = () => {
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img 
                 src={heroImage} 
-                alt="START - Modern job discovery platform" 
+                alt="STARTX - Modern job discovery platform" 
                 className="w-full h-auto object-cover"
               />
               {/* Overlay gradient */}

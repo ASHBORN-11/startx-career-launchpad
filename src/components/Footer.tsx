@@ -12,7 +12,7 @@ const Footer = () => {
               <span className="bg-gradient-to-r from-startx-green to-blue-400 bg-clip-text text-transparent"> build your future.</span>
             </h2>
             <Button variant="hero" size="lg" className="h-14 px-8 text-lg font-poppins">
-              Join START Now
+              Join STARTX Now
             </Button>
           </div>
         </div>
@@ -25,7 +25,7 @@ const Footer = () => {
           <div className="space-y-4">
             <div className="font-poppins font-bold text-2xl">
               <span className="bg-gradient-to-r from-startx-green to-blue-400 bg-clip-text text-transparent">
-                START
+                STARTX
               </span>
             </div>
             <p className="text-white/70 font-inter">
@@ -70,7 +70,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
           <p className="text-white/50 font-inter text-sm">
-            © 2024 START. All rights reserved.
+            © 2024 STARTX. All rights reserved.
           </p>
           <div className="flex items-center space-x-6 mt-4 md:mt-0">
             <a href="#" className="text-white/50 hover:text-white transition-colors">
