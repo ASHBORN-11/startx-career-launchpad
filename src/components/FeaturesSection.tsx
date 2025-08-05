@@ -38,7 +38,7 @@ const FeaturesSection = () => {
             <span className="bg-gradient-to-r from-startx-royal to-startx-green bg-clip-text text-transparent"> accelerate</span> your career
           </h2>
           <p className="text-xl text-muted-foreground font-inter leading-relaxed">
-            Join thousands of professionals who've transformed their careers with STARTX's powerful features.
+            Join thousands of professionals who've transformed their careers with START's powerful features.
           </p>
         </div>
 

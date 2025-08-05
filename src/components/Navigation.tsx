@@ -13,7 +13,7 @@ const Navigation = () => {
           <div className="flex items-center">
             <div className="font-poppins font-bold text-2xl">
               <span className="bg-gradient-to-r from-startx-royal to-startx-green bg-clip-text text-transparent">
-                STARTX
+                START
               </span>
             </div>
           </div>
